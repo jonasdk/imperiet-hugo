@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Imperiet Design · visitkort
+   Imperiet ApS · visitkort
    Kun CSS, ingen JavaScript.
 
    Alle mål er i designets pixels (web: 1200 × 900, mobil: 1080 × 1350)
@@ -54,7 +54,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  background: var(--sort);          /* sort i det uendelige */
+  background: var(--sort);
   color: var(--hvid);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
