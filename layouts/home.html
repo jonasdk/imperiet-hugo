@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ .Title }}</title>
+  <meta name="description" content="{{ .Params.beskrivelse }}">
+  <meta name="theme-color" content="#000000">
+  {{- range slice "roboto-condensed-extrabold-italic" "baskervville-italic" "bangers" "boogaloo" }}
+  <link rel="preload" href="{{ printf "fonts/%s.woff2" . | relURL }}" as="font" type="font/woff2" crossorigin>
+  {{- end }}
+  {{- $css := resources.Get "css/main.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+</head>
+<body>
+  <main class="kort">
+    <h1 class="boble boble--velkommen">
+      <span class="boble__form">{{ (resources.Get "svg/boble-velkommen.svg").Content | safeHTML }}</span>
+      <span class="boble__tekst">{{ partial "linjer.html" .Params.velkommen }}</span>
+    </h1>
+
+    <p class="status">{{ partial "linjer.html" .Params.status }}</p>
+
+    {{ partial "boble.html" (dict "id" "telefon"   "felt" .Params.telefon   "form" "boble-telefon" "formMobil" "boble-instagram") }}
+    {{ partial "boble.html" (dict "id" "instagram" "felt" .Params.instagram "form" "boble-instagram") }}
+    {{ partial "boble.html" (dict "id" "mail"      "felt" .Params.mail      "form" "boble-mail") }}
+    {{ partial "boble.html" (dict "id" "adresse"   "felt" .Params.adresse   "form" "boble-adresse") }}
+
+    <span class="palme">{{ (resources.Get "svg/palme.svg").Content | safeHTML }}</span>
+  </main>
+</body>
+</html>

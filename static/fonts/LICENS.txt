@@ -1,0 +1,7 @@
+Alle fonte i denne mappe er udgivet under SIL Open Font License 1.1.
+https://openfontlicense.org
+
+Roboto Condensed  · Copyright The Roboto Condensed Project Authors
+Baskervville      · Copyright The Baskervville Project Authors
+Bangers           · se OFL-Bangers.txt
+Boogaloo          · se OFL-Boogaloo.txt

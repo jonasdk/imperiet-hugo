@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Imperiet Design · visitkort
+   Kun CSS, ingen JavaScript.
+
+   Alle mål er i designets pixels (web: 1200 × 900, mobil: 1080 × 1350)
+   og skaleres automatisk med skærmen.
+     --x / --y   boblens øverste venstre hjørne
+     --w / --h   boblens mindste bredde/højde (vokser med teksten)
+     --tx / --ty tekstens venstre kant / toppen af versalerne
+     --fs        skriftstørrelse
+   ========================================================================== */
+
+/* ---------- Farver og fonte ---------- */
+:root {
+  --sort: #000;
+  --hvid: #fff;
+  --roed: #ff0101;
+  --tekst: #000;
+
+  --font-overskrift: "Roboto Condensed", "Arial Narrow", sans-serif;
+  --font-serif: "Baskervville", "Baskerville", Georgia, serif;
+  --font-instagram: "Bangers", "Impact", sans-serif;
+  --font-mail: "Boogaloo", "Comic Sans MS", cursive;
+
+  --overgang: 160ms ease-out;
+}
+
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("../fonts/roboto-condensed-extrabold-italic.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Baskervville";
+  src: url("../fonts/baskervville-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bangers";
+  src: url("../fonts/bangers.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Boogaloo";
+  src: url("../fonts/boogaloo.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* ---------- Side ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--sort);          /* sort i det uendelige */
+  color: var(--hvid);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+}
+
+h1, p { margin: 0; font: inherit; }
+
+/* ---------- Kortet (scenen) ---------- */
+.kort {
+  --W: 1200;
+  --H: 900;
+  position: relative;
+  width: min(100vw, 100svh * 1200 / 900, 1600px);
+  aspect-ratio: 1200 / 900;
+  container-type: inline-size;
+  --s: calc(100cqw / var(--W));     /* én designpixel */
+}
+
+.kort > * {
+  position: absolute;
+  left: calc(var(--x) * var(--s));
+  top: calc(var(--y) * var(--s));
+}
+
+/* ---------- Bobler ---------- */
+.boble {
+  display: block;
+  min-width: calc(var(--w) * var(--s));
+  min-height: calc(var(--h) * var(--s));
+  padding:
+    calc((var(--ty) - var(--y) - var(--fs) * var(--cap-top)) * var(--s))
+    calc(var(--pr, 40) * var(--s))
+    0
+    calc((var(--tx) - var(--x)) * var(--s));
+  color: var(--hvid);               /* boblens farve */
+  text-decoration: none;
+  transition: color var(--overgang);
+}
+
+.boble__form,
+.boble__form svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.boble__tekst {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  color: var(--tekst);
+  font-size: calc(var(--fs) * var(--s));
+  line-height: var(--lh);
+  letter-spacing: var(--sp, 0);
+  transform: rotate(var(--rot, 0deg));
+  transform-origin: left center;
+  transition: color var(--overgang);
+}
+
+/* Hover og tastaturfokus: rød boble, hvid tekst */
+a.boble:hover,
+a.boble:focus-visible { color: var(--roed); }
+
+a.boble:hover .boble__tekst,
+a.boble:focus-visible .boble__tekst { color: var(--hvid); }
+
+a.boble:focus-visible { outline: none; }
+
+/* ---------- Typografi pr. font ----------
+   --cap-top: afstand fra linjeboksens top til versalernes top (i em)
+   beregnet ud fra fontens metrik og linjehøjden. */
+.font-overskrift,
+.boble--velkommen, .boble--telefon, .boble--adresse {
+  font-family: var(--font-overskrift);
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  --cap-top: calc((var(--lh) - 1.172) / 2 + 0.217);
+}
+
+.boble--instagram {
+  font-family: var(--font-instagram);
+  text-transform: uppercase;
+  --cap-top: calc((var(--lh) - 1.064) / 2 + 0.162);
+}
+
+.boble--mail {
+  font-family: var(--font-mail);
+  --cap-top: calc((var(--lh) - 1.189) / 2 + 0.22);
+}
+
+.status {
+  font-family: var(--font-serif);
+  font-style: italic;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-size: calc(var(--fs) * var(--s));
+  line-height: var(--lh);
+  letter-spacing: var(--sp, 0);
+  /* teksten placeres ud fra versalernes top */
+  --cap-top: calc((var(--lh) - 1.293) / 2 + 0.288);
+  top: calc((var(--y) - var(--fs) * var(--cap-top)) * var(--s));
+}
+
+/* ---------- Palme ---------- */
+.palme {
+  width: calc(var(--w) * var(--s));
+  color: var(--hvid);
+}
+.palme svg { display: block; width: 100%; height: auto; }
+
+/* ---------- Web: placering (1200 × 900) ---------- */
+.boble--velkommen { --x: 79;  --y: 49;  --w: 432; --h: 230; --tx: 117; --ty: 98;  --fs: 52; --lh: 1;    --pr: 30; }
+.status           { --x: 524; --y: 210;                                            --fs: 43; --lh: 1.21; --sp: 0.084em; }
+.boble--telefon   { --x: 105; --y: 316; --w: 764; --h: 241; --tx: 141; --ty: 389; --fs: 50; --lh: 1.15; --pr: 190; }
+.boble--instagram { --x: 78;  --y: 540; --w: 528; --h: 105; --tx: 148; --ty: 590; --fs: 37; --lh: 1;    --sp: 0.08em; --rot: -3deg; --pr: 75; }
+.boble--mail      { --x: 163; --y: 686; --w: 397; --h: 84;  --tx: 209; --ty: 707; --fs: 47; --lh: 1;    --pr: 60; }
+.boble--adresse   { --x: 577; --y: 559; --w: 589; --h: 175; --tx: 692; --ty: 657; --fs: 38; --lh: 1;    --pr: 80; }
+.palme            { --x: 904; --y: 368; --w: 185; }
+
+/* Anden linje i telefonboblen er rykket ind på web */
+.boble--telefon .kun-web .linje:nth-of-type(2) {
+  display: inline-block;
+  padding-left: calc(159 * var(--s));
+}
+
+/* ---------- Mobil: placering (1080 × 1350) ---------- */
+.kun-mobil { display: none; }
+
+@media (max-aspect-ratio: 1/1), (max-width: 600px) {
+  .kort {
+    --W: 1080;
+    --H: 1350;
+    width: min(100vw, 100svh * 1080 / 1350);
+    aspect-ratio: 1080 / 1350;
+  }
+
+  .kun-web { display: none; }
+  .kun-mobil { display: block; }
+
+  .boble--velkommen { --x: 31;  --y: 61;   --w: 828; --h: 358; --tx: 152; --ty: 131;  --fs: 80; --lh: 0.95; --pr: 150; }
+  .status           { --x: 150; --y: 397;                                             --fs: 64; --lh: 1.25; --sp: -0.03em; }
+  .boble--mail      { --x: 69;  --y: 604;  --w: 480; --h: 102; --tx: 161; --ty: 624;  --fs: 62; --lh: 1;    --pr: 110; }
+  .boble--instagram { --x: 99;  --y: 736;  --w: 642; --h: 135; --tx: 184; --ty: 795;  --fs: 46; --lh: 1;    --sp: 0.07em; --rot: -3deg; --pr: 100; }
+  .boble--adresse   { --x: 464; --y: 850;  --w: 597; --h: 177; --tx: 540; --ty: 945;  --fs: 45; --lh: 1;    --pr: 60; }
+  .boble--telefon   { --x: 69;  --y: 1055; --w: 627; --h: 157; --tx: 128; --ty: 1111; --fs: 48; --lh: 1;    --pr: 50; }
+  .palme            { --x: 790; --y: 592;  --w: 247; }
+}
+
+/* ---------- Respekter ønske om mindre bevægelse ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .boble, .boble__tekst { transition: none; }
+}

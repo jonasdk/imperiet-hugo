@@ -1,0 +1,7 @@
+baseURL = "https://imperiet.dk/"
+languageCode = "da"
+title = "Imperiet Design"
+disableKinds = ["taxonomy", "term", "section", "RSS", "sitemap", "404"]
+
+[markup.goldmark.renderer]
+unsafe = false
