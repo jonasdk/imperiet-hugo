@@ -1,6 +1,6 @@
-# Imperiet Design · visitkort
+# Imperiet ApS · visitkort
 
-Hugo-site uden JavaScript. Kun HTML og CSS.
+Hugo-site bare HTML og CSS.
 
 ## Ret tekst
 

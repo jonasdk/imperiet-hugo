@@ -1,6 +1,6 @@
 {{- /* Parametre: id, felt (front matter-map), form (svg-navn), formMobil (valgfri) */ -}}
 {{- $f := .felt -}}
-<a class="boble boble--{{ .id }}" href="{{ $f.link }}"{{ if hasPrefix $f.link "http" }} rel="noopener"{{ end }}>
+<a class="boble boble--{{ .id }}" href="{{ $f.link | safeURL }}"{{ if hasPrefix $f.link "http" }} rel="noopener"{{ end }}>
   <span class="boble__form{{ with .formMobil }} kun-web{{ end }}">{{ (resources.Get (printf "svg/%s.svg" .form)).Content | safeHTML }}</span>
   {{- with .formMobil }}
   <span class="boble__form kun-mobil">{{ (resources.Get (printf "svg/%s.svg" .)).Content | safeHTML }}</span>
