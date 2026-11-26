@@ -19,6 +19,7 @@ status:
 
 telefon:
   link: "tel:+4533385500"
+  link_paa_web: false   # kun link på mobil
   web:
     - "Men vi er her ..."
     - "På tlf 33 38 55 00"

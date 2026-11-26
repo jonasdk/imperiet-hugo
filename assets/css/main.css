@@ -186,6 +186,7 @@ a.boble:focus-visible { outline: none; }
 .palme            { --x: 904; --y: 368; --w: 185; }
 
 /* Anden linje i telefonboblen er rykket ind på web */
+.boble--telefon.kun-web .linje:nth-of-type(2),
 .boble--telefon .kun-web .linje:nth-of-type(2) {
   display: inline-block;
   padding-left: calc(159 * var(--s));

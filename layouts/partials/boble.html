@@ -1,10 +1,25 @@
-{{- /* Parametre: id, felt (front matter-map), form (svg-navn), formMobil (valgfri) */ -}}
+{{- /* Parametre: id, felt (front matter-map), form (svg-navn), formMobil (valgfri)
+       Sæt link_paa_web: false i front matter for at fjerne linket på desktop. */ -}}
 {{- $f := .felt -}}
-<a class="boble boble--{{ .id }}" href="{{ $f.link | safeURL }}"{{ if hasPrefix $f.link "http" }} rel="noopener"{{ end }}>
-  <span class="boble__form{{ with .formMobil }} kun-web{{ end }}">{{ (resources.Get (printf "svg/%s.svg" .form)).Content | safeHTML }}</span>
+{{- $formWeb := .form -}}
+{{- $formMobil := .formMobil | default .form -}}
+{{- $attr := printf `href="%s"` $f.link -}}
+{{- if hasPrefix $f.link "http" }}{{ $attr = printf `%s rel="noopener"` $attr }}{{ end -}}
+
+{{- if eq $f.link_paa_web false }}
+<span class="boble boble--{{ .id }} kun-web">
+  {{ partial "boble-indhold.html" (dict "form" $formWeb "linjer" $f.web) }}
+</span>
+<a class="boble boble--{{ .id }} kun-mobil" {{ $attr | safeHTMLAttr }}>
+  {{ partial "boble-indhold.html" (dict "form" $formMobil "linjer" $f.mobil) }}
+</a>
+{{- else }}
+<a class="boble boble--{{ .id }}" {{ $attr | safeHTMLAttr }}>
+  <span class="boble__form{{ with .formMobil }} kun-web{{ end }}">{{ (resources.Get (printf "svg/%s.svg" $formWeb)).Content | safeHTML }}</span>
   {{- with .formMobil }}
   <span class="boble__form kun-mobil">{{ (resources.Get (printf "svg/%s.svg" .)).Content | safeHTML }}</span>
   {{- end }}
   <span class="boble__tekst kun-web">{{ partial "linjer.html" $f.web }}</span>
   <span class="boble__tekst kun-mobil">{{ partial "linjer.html" $f.mobil }}</span>
 </a>
+{{- end }}
